@@ -146,6 +146,10 @@ MEDIA_URL = "/media/"
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
+# Set login path:
+#   https://docs.djangoproject.com/en/3.2/ref/settings/#login-url
+LOGIN_URL = "authnapp:login"
+
 DOMAIN_NAME = "http://localhost:8000"
 
 # Read about sending email:
@@ -167,5 +171,5 @@ EMAIL_HOST_USER = None
 EMAIL_HOST_PASSWORD = None
 
 # Email as files
-# EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
-# EMAIL_FILE_PATH = "tmp/email-messages/"
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_FILE_PATH = "tmp/email-messages/"
