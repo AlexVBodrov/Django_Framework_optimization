@@ -3,12 +3,6 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# geekshop --->
-
-tmp
-
-# <--- geekshop
-
 # C extensions
 *.so
 
@@ -125,9 +119,6 @@ venv/
 ENV/
 env.bak/
 venv.bak/
-/venv/
-/.idea/
-pyvenv.cfg
 
 # Spyder project settings
 .spyderproject
@@ -252,4 +243,8 @@ fabric.properties
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
 
-/requirements.txt
+# geekshop --->
+
+tmp
+
+# <--- geekshop

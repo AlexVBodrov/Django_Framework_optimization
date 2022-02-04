@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 import os
-import json
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -46,6 +45,7 @@ INSTALLED_APPS = [
     "basketapp",
     "adminapp",
     "social_django",
+    "ordersapp",
 ]
 
 # Auth model
@@ -77,6 +77,7 @@ TEMPLATES = [
                 "mainapp.context_processors.basket",
                 "social_django.context_processors.backends",
                 "social_django.context_processors.login_redirect",
+                "django.template.context_processors.media",
             ],
         },
     },
@@ -98,7 +99,6 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
-
 
 if not DEBUG:
     AUTH_PASSWORD_VALIDATORS = [
@@ -182,24 +182,14 @@ EMAIL_FILE_PATH = "tmp/email-messages/"
 AUTHENTICATION_BACKENDS = (
     "django.contrib.auth.backends.ModelBackend",
     "social_core.backends.github.GithubOAuth2",
-    "social_core.backends.vk.VKOAuth2",
 )
+
+import json
 
 with open(
     os.path.join(BASE_DIR, "tmp", "secrets", "github.json"), "r"
-) as secrets_github:
-    github_auth = json.load(secrets_github)
+) as secrets:
+    github_auth = json.load(secrets)
 
 SOCIAL_AUTH_GITHUB_KEY = github_auth["client_id"]
 SOCIAL_AUTH_GITHUB_SECRET = github_auth["client_secret"]
-
-with open(
-    os.path.join(BASE_DIR, "tmp", "secrets", "vk.json"), "r"
-) as secrets_vk:
-    vk_auth = json.load(secrets_vk)
-
-SOCIAL_AUTH_VK_OAUTH2_KEY = vk_auth["client_id"]
-SOCIAL_AUTH_VK_OAUTH2_SECRET = vk_auth["client_secret"]
-SOCIAL_AUTH_VK_APP_KEY = vk_auth["client_id"]
-SOCIAL_AUTH_VK_APP_SECRET = vk_auth["servise_key"]
-SOCIAL_AUTH_VK_APP_USER_MODE = 2
