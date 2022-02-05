@@ -25,4 +25,3 @@ class OrderItemForm(forms.ModelForm):
     class Meta:
         model = OrderItem
         exclude = ()
-
