@@ -202,6 +202,5 @@ with open(
 
 SOCIAL_AUTH_VK_OAUTH2_KEY = vk_auth["client_id"]
 SOCIAL_AUTH_VK_OAUTH2_SECRET = vk_auth["client_secret"]
-SOCIAL_AUTH_VK_APP_KEY = vk_auth["client_id"]
-SOCIAL_AUTH_VK_APP_SECRET = vk_auth["servise_key"]
 SOCIAL_AUTH_VK_APP_USER_MODE = 2
+
