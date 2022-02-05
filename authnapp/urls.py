@@ -1,19 +1,9 @@
-# from django.urls import path
 from django.urls import re_path
 
 import authnapp.views as authnapp
 from authnapp.apps import AuthnappConfig
 
-app_name = AuthnappConfig.nameapp_name = "authnapp"
-
-#
-# urlpatterns = [
-#     path("login/", authnapp.login, name="login"),
-#     path("logout/", authnapp.logout, name="logout"),
-#     path("register/", authnapp.register, name="register"),
-#     path("edit/", authnapp.edit, name="edit"),
-# ]
-
+app_name = AuthnappConfig.name
 
 urlpatterns = [
     re_path(r"^login/$", authnapp.login, name="login"),
