@@ -11,6 +11,10 @@ from basketapp.models import Basket
 from ordersapp.forms import OrderItemForm
 from ordersapp.models import Order, OrderItem
 
+from mainapp.models import Product
+from django.http import JsonResponse
+
+
 
 class OrderList(ListView):
     model = Order
@@ -131,11 +135,4 @@ def product_quantity_update_save(instance, sender, **kwargs):
     else:
         """If user create order or basket"""
         instance.product.quantity -= instance.quantity
-    instance.product.save()
-
-
-@receiver(pre_delete, sender=OrderItem)
-@receiver(pre_delete, sender=Basket)
-def product_quantity_update_delete(instance, **kwargs):
-    instance.product.quantity += instance.quantity
     instance.product.save()
