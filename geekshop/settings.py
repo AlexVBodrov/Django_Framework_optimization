@@ -26,7 +26,7 @@ SECRET_KEY = (
 )
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False if os.getenv("DJANGO_PRODUCTION", default=None) else True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -55,11 +55,19 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
+    # "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "social_django.middleware.SocialAuthExceptionMiddleware",
 ]
+
+if DEBUG:
+    MIDDLEWARE.extend(
+        [
+            "debug_toolbar.middleware.DebugToolbarMiddleware",
+        ]
+    )
 
 ROOT_URLCONF = "geekshop.urls"
 
@@ -89,12 +97,23 @@ WSGI_APPLICATION = "geekshop.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+if DEBUG:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+        }
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "NAME": "geekshop",
+            "ENGINE": "django.db.backends.postgresql",
+            "USER": "django",
+            "PASSWORD": "geekbrains",
+            "HOST": "localhost",
+        }
+    }
 
 
 # Password validation
@@ -139,12 +158,11 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 
-STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
-
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+# In common case STATIC_ROOT can not be in STATICFILES_DIRS
+if DEBUG:
+    STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
+else:
+    STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 # Media files
 MEDIA_URL = "/media/"
@@ -182,15 +200,14 @@ EMAIL_FILE_PATH = "tmp/email-messages/"
 AUTHENTICATION_BACKENDS = (
     "django.contrib.auth.backends.ModelBackend",
     "social_core.backends.github.GithubOAuth2",
-    "social_core.backends.vk.VKOAuth2",
 )
 
 import json
 
 with open(
     os.path.join(BASE_DIR, "tmp", "secrets", "github.json"), "r"
-) as secrets_github:
-    github_auth = json.load(secrets_github)
+) as secrets:
+    github_auth = json.load(secrets)
 
 SOCIAL_AUTH_GITHUB_KEY = github_auth["client_id"]
 SOCIAL_AUTH_GITHUB_SECRET = github_auth["client_secret"]
