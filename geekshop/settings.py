@@ -55,12 +55,19 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
+    # "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "social_django.middleware.SocialAuthExceptionMiddleware",
 ]
+
+if DEBUG:
+    MIDDLEWARE.extend(
+        [
+            "debug_toolbar.middleware.DebugToolbarMiddleware",
+        ]
+    )
 
 ROOT_URLCONF = "geekshop.urls"
 
@@ -213,4 +220,3 @@ with open(
 SOCIAL_AUTH_VK_OAUTH2_KEY = vk_auth["client_id"]
 SOCIAL_AUTH_VK_OAUTH2_SECRET = vk_auth["client_secret"]
 SOCIAL_AUTH_VK_APP_USER_MODE = 2
-
