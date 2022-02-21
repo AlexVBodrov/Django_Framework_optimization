@@ -78,4 +78,4 @@ $(document).ready(function () {
         removed: itemDelete,
         hideLastAddForm: true
     });
-});
+

@@ -101,8 +101,6 @@ def main(request):
 #     return same_products
 
 
-def get_hot_product_list():
-    products = get_products()
     hot_product = random.sample(list(products), 1)[0]
     hot_list = products.exclude(pk=hot_product.pk)[:3]
     return (hot_product, hot_list)
@@ -161,6 +159,7 @@ def product(request, pk):
 
 from django.views.decorators.cache import cache_page
 
+
 @cache_page(600)
 def contact(request):
     title = "о нас"
@@ -168,3 +167,4 @@ def contact(request):
     locations = Contact.objects.all()
     content = {"title": title, "visit_date": visit_date, "locations": locations}
     return render(request, "mainapp/contact.html", content)
+    
