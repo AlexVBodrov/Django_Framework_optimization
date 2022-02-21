@@ -14,6 +14,7 @@ from ordersapp.models import Order, OrderItem
 from mainapp.models import Product
 from django.http import JsonResponse
 
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
@@ -140,18 +141,3 @@ def product_quantity_update_save(instance, sender, **kwargs):
         instance.product.quantity -= instance.quantity
     instance.product.save()
 
-
-@receiver(pre_delete, sender=OrderItem)
-@receiver(pre_delete, sender=Basket)
-def product_quantity_update_delete(instance, **kwargs):
-    instance.product.quantity += instance.quantity
-    instance.product.save()
-
-
-def get_product_price(request, pk):
-    if request.is_ajax():
-        product = Product.objects.filter(pk=int(pk)).first()
-        if product:
-            return JsonResponse({"price": product.price})
-        else:
-            return JsonResponse({"price": 0})
