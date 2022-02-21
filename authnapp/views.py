@@ -57,6 +57,7 @@ def register(request):
     return render(request, "authnapp/register.html", content)
 
 
+
 @login_required
 @transaction.atomic
 def edit(request):

@@ -207,12 +207,4 @@ with open(
 SOCIAL_AUTH_GITHUB_KEY = github_auth["client_id"]
 SOCIAL_AUTH_GITHUB_SECRET = github_auth["client_secret"]
 
-with open(
-    os.path.join(BASE_DIR, "tmp", "secrets", "vk.json"), "r"
-) as secrets_vk:
-    vk_auth = json.load(secrets_vk)
-
-SOCIAL_AUTH_VK_OAUTH2_KEY = vk_auth["client_id"]
-SOCIAL_AUTH_VK_OAUTH2_SECRET = vk_auth["client_secret"]
-SOCIAL_AUTH_VK_APP_USER_MODE = 2
 

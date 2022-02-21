@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 from django.db.models.signals import pre_delete, pre_save
 from django.dispatch import receiver
@@ -13,8 +14,6 @@ from ordersapp.models import Order, OrderItem
 
 from mainapp.models import Product
 from django.http import JsonResponse
-
-from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class OrderList(LoginRequiredMixin, ListView):
