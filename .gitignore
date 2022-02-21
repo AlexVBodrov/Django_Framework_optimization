@@ -2,7 +2,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
-.dbeaver
+
 # C extensions
 *.so
 
@@ -248,7 +248,3 @@ fabric.properties
 tmp
 
 # <--- geekshop
-/.project
-/.dbeaver/
-/.dbeaver/
-/.dbeaver/

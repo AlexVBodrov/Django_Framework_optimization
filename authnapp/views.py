@@ -8,8 +8,6 @@ from django.urls import reverse
 from authnapp.forms import ShopUserEditForm, ShopUserLoginForm, ShopUserProfileEditForm, ShopUserRegisterForm
 from authnapp.models import ShopUser
 
-from django.contrib.auth.decorators import login_required
-
 
 def login(request):
     title = "вход"
@@ -55,6 +53,9 @@ def register(request):
 
     content = {"title": title, "register_form": register_form}
     return render(request, "authnapp/register.html", content)
+
+
+from django.contrib.auth.decorators import login_required
 
 
 @login_required

@@ -55,19 +55,13 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
-    # "django.middleware.csrf.CsrfViewMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "social_django.middleware.SocialAuthExceptionMiddleware",
 ]
 
-if DEBUG:
-    MIDDLEWARE.extend(
-        [
-            "debug_toolbar.middleware.DebugToolbarMiddleware",
-        ]
-    )
 
 ROOT_URLCONF = "geekshop.urls"
 
@@ -212,30 +206,25 @@ with open(
 SOCIAL_AUTH_GITHUB_KEY = github_auth["client_id"]
 SOCIAL_AUTH_GITHUB_SECRET = github_auth["client_secret"]
 
-with open(
-    os.path.join(BASE_DIR, "tmp", "secrets", "vk.json"), "r"
-) as secrets_vk:
-    vk_auth = json.load(secrets_vk)
-
-SOCIAL_AUTH_VK_OAUTH2_KEY = vk_auth["client_id"]
-SOCIAL_AUTH_VK_OAUTH2_SECRET = vk_auth["client_secret"]
-SOCIAL_AUTH_VK_APP_USER_MODE = 2
-
 # Django Debug Toolbar --->
 if DEBUG:
-    INSTALLED_APPS.extend([
-        "debug_toolbar",
-        "template_profiler_panel",
-        "django_extensions",
-    ])
+    INSTALLED_APPS.extend(
+        [
+            "debug_toolbar",
+            "template_profiler_panel",
+            "django_extensions",
+        ]
+    )
 
 
 if DEBUG:
-    MIDDLEWARE.extend([
-        "debug_toolbar.middleware.DebugToolbarMiddleware",
-    ])
+    MIDDLEWARE.extend(
+        [
+            "debug_toolbar.middleware.DebugToolbarMiddleware",
+        ]
+    )
 
-# Debug tool bar settings
+# Debgu tool bar settings
 if DEBUG:
 
     def show_toolbar(request):
@@ -263,3 +252,18 @@ if DEBUG:
         "template_profiler_panel.panels.template.TemplateProfilerPanel",
     ]
 # <--- Django Debug Toolbar
+
+CACHE_MIDDLEWARE_ALIAS = "default"
+CACHE_MIDDLEWARE_SECONDS = 120
+CACHE_MIDDLEWARE_KEY_PREFIX = "geekbrains"
+
+# Be carefull if you have Windows! Install Memcached before run project!
+#     https://www.ubergizmo.com/how-to/install-memcached-windows/
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.memcached.MemcachedCache",
+        "LOCATION": "127.0.0.1:11211",
+    }
+}
+
+LOW_CACHE = True
