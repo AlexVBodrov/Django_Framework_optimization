@@ -14,8 +14,6 @@ from ordersapp.models import Order, OrderItem
 from mainapp.models import Product
 from django.http import JsonResponse
 
-
-
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
@@ -141,5 +139,6 @@ def product_quantity_update_save(instance, sender, **kwargs):
         """If user create order or basket"""
         instance.product.quantity -= instance.quantity
     instance.product.save()
+
 
 
